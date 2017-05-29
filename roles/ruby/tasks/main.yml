@@ -1,0 +1,20 @@
+- name: check installed
+  shell: ~/.rbenv/bin/rbenv versions | grep 2.4.1
+  register: install_check
+  ignore_errors: True
+  become: no
+
+- name: install rbenv
+  command: ~/.rbenv/bin/rbenv install 2.4.1
+  become: no
+  when: install_check.rc != 0
+
+- name: set default ruby
+  command: ~/.rbenv/bin/rbenv global 2.4.1
+  become: no
+  when: install_check.rc != 0
+
+- name: rehash
+  command: ~/.rbenv/bin/rbenv rehash
+  become: no
+  when: install_check.rc != 0

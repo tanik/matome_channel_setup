@@ -1,0 +1,30 @@
+- name: install rbenv
+  git:
+    repo: https://github.com/sstephenson/rbenv.git
+    dest: ~/.rbenv
+  become: no
+
+- name: install ruby-build
+  git:
+    repo: https://github.com/sstephenson/ruby-build.git
+    dest: ~/.rbenv/plugins/ruby-build
+  become: no
+
+- name: install rbenv-gem-rehash
+  git:
+    repo: https://github.com/sstephenson/rbenv-gem-rehash.git
+    dest: ~/.rbenv/plugins/ruby-gem-rehash
+  become: no
+
+- name: setup path
+  shell: |
+    if grep ".rbenv/bin" ~/.bashrc > /dev/null
+    then
+      echo 'already setup'
+      exit 0
+    else
+      echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+      echo 'eval "$(rbenv init -)"' >>  ~/.bashrc
+      exit 0
+    fi
+  become: no

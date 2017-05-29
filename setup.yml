@@ -1,0 +1,8 @@
+- hosts: mch-dev
+  become: yes
+  user: apps
+  roles:
+    - common
+    - nginx
+    - rbenv
+    - ruby
